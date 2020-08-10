@@ -33,6 +33,15 @@ public class ChessMatch {
         return mat;
     }
     
+    public boolean[][] possibleMoves(ChessPosition sourcePosition){                 // imprimir posibles posiciones desde posicion de origen
+        
+        Position position = sourcePosition.toPosition();                          // convertir en posicion de matriz normal
+        validateSourcePosition(position);           
+        
+        return board.piece(position).possibleMoves();
+    }
+    
+    
     public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition){
         
         Position source =  sourcePosition.toPosition();
