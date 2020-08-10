@@ -1,6 +1,7 @@
 package chess;
 
 import boardgame.Board;
+import boardgame.Piece;
 import boardgame.Position;
 import chess.pieces.King;
 import chess.pieces.Rook;
@@ -31,6 +32,50 @@ public class ChessMatch {
         }
         return mat;
     }
+    
+    public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition){
+        
+        Position source =  sourcePosition.toPosition();
+        Position target = targetPosition.toPosition();
+        validateSourcePosition(source);
+        validateTargetPosition(source, target);
+        
+        Piece capturedPiece = makeMove(source, target);
+        
+        return (ChessPiece)capturedPiece;
+    }
+    
+    private Piece makeMove(Position source, Position target){
+        
+        Piece P = board.removePiece(source);
+        Piece capturedPiece = board.removePiece(target);
+        
+        board.placePiece(P, target);
+        
+        return capturedPiece;
+    }
+    
+    private void validateSourcePosition(Position position){
+        
+        if (!board.ThereIsAPiece(position)){
+            throw new ChessException("There is not piece on source position");
+        }
+        if (!board.piece(position).isThereAnyPossibleMove()){
+            throw new ChessException("There is not possible move for the chosen piece"); 
+        }
+        
+    }
+    
+    private void validateTargetPosition(Position source, Position target){
+        
+        if (!board.piece(source).possibleMove(target)){
+            
+            throw new ChessException("the chosen piece cant move to target position");
+        }
+        
+    }
+    
+    
 
     private void placeNewPiece(char column, int row, ChessPiece piece) {
 
@@ -56,11 +101,6 @@ public class ChessMatch {
         /* placeNewPiece('B', 6 , new Rook(board, Color.WHITE));
         placeNewPiece('A', 2 , new King(board, Color.BLACK));
         placeNewPiece('E', 1, new King(board, Color.BLACK));*/
- /*placeNewPiece('A', 1 , new Rook(board, Color.WHITE));
-        placeNewPiece('B', 1 , new King(board, Color.BLACK));
-        placeNewPiece('C', 1, new King(board, Color.BLACK));
-        placeNewPiece('D', 1 , new Rook(board, Color.WHITE));
-        placeNewPiece('F', 1 , new King(board, Color.BLACK));
-        placeNewPiece('G', 1, new King(board, Color.BLACK));*/
+ 
     }
 }
