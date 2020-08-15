@@ -43,7 +43,7 @@ public class Program {
                 System.out.print("target: ");
                 ChessPosition target = UI.readChessPosition(sc);
                 
-                ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
+                ChessPiece capturedPiece = chessMatch.performChessMove(source, target); //REVISAR
                 
                 if (capturedPiece != null){
                     captured.add(capturedPiece);
